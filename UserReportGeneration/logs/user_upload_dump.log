@@ -1,0 +1,11 @@
+./data2.csv moved to hadoop
+./data2.csv moved to backup folder
+./data3.csv moved to hadoop
+./data3.csv moved to backup folder
+
+Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
+OK
+Time taken: 0.659 seconds
+WARN: The method class org.apache.commons.logging.impl.SLF4JLogFactory#release() was invoked.
+WARN: Please see http://www.slf4j.org/codes.html#release for an explanation.
+Hive command Ran successfully.............

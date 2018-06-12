@@ -1,0 +1,62 @@
+
+Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
+OK
+Time taken: 0.513 seconds
+WARN: The method class org.apache.commons.logging.impl.SLF4JLogFactory#release() was invoked.
+WARN: Please see http://www.slf4j.org/codes.html#release for an explanation.
+
+Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
+OK
+Time taken: 0.532 seconds
+WARN: The method class org.apache.commons.logging.impl.SLF4JLogFactory#release() was invoked.
+WARN: Please see http://www.slf4j.org/codes.html#release for an explanation.
+
+Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
+OK
+Time taken: 0.54 seconds
+WARN: The method class org.apache.commons.logging.impl.SLF4JLogFactory#release() was invoked.
+WARN: Please see http://www.slf4j.org/codes.html#release for an explanation.
+
+Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
+OK
+Time taken: 0.503 seconds
+WARN: The method class org.apache.commons.logging.impl.SLF4JLogFactory#release() was invoked.
+WARN: Please see http://www.slf4j.org/codes.html#release for an explanation.
+
+Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
+OK
+Time taken: 0.529 seconds
+WARN: The method class org.apache.commons.logging.impl.SLF4JLogFactory#release() was invoked.
+WARN: Please see http://www.slf4j.org/codes.html#release for an explanation.
+
+Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
+unix_timestamp(void) is deprecated. Use current_timestamp instead.
+Query ID = cloudera_20180610234343_6fc689b8-8755-4d4e-8d03-f474ffb11620
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1528691956015_0010, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1528691956015_0010/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1528691956015_0010
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2018-06-10 23:43:23,361 Stage-1 map = 0%,  reduce = 0%
+2018-06-10 23:43:29,689 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.09 sec
+2018-06-10 23:43:37,117 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 3.14 sec
+MapReduce Total cumulative CPU time: 3 seconds 140 msec
+Ended Job = job_1528691956015_0010
+Moving data to: hdfs://quickstart.cloudera:8020/user/hive/warehouse/latest_activity_user
+Table default.latest_activity_user stats: [numFiles=1, numRows=26, totalSize=305, rawDataSize=279]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 3.14 sec   HDFS Read: 13839 HDFS Write: 390 SUCCESS
+Total MapReduce CPU Time Spent: 3 seconds 140 msec
+OK
+Time taken: 23.794 seconds
+WARN: The method class org.apache.commons.logging.impl.SLF4JLogFactory#release() was invoked.
+WARN: Please see http://www.slf4j.org/codes.html#release for an explanation.
+user_report.sh: line 18: syntax error near unexpected token `else'
+user_report.sh: line 18: `else'
