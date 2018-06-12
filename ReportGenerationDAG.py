@@ -53,8 +53,8 @@ t7 = BashOperator(
     bash_command='source /home/cloudera/airflow/dags/UserReportGeneration/bin/user_total.sh ',
     dag=dag)
 
-t1.set_downstream(t2)
-t2.set_downstream([t5,t3,t4])
+t1.set_downstream([t2,t3,t4])
+t2.set_downstream(t5)
 t3.set_downstream([t7,t6])
-t4.set_downstream([t7,t6])
-t5.set_downstream([t7,t6])
+t4.set_downstream(t6)
+t5.set_downstream(t6)

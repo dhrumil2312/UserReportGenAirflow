@@ -67,7 +67,7 @@ class ActivityLog(Model):
     id = PrimaryKeyField()
     user = ForeignKeyField(User, related_name='users', null=True)
     type = TextField()
-    timestamp = TimestampField()
+    times = TimestampField()
 
     types = ["INSERT", "UPDATE", "DELETE"]
 
@@ -93,13 +93,13 @@ def create_csv():
     user_count = len(users)
     csv_filename = "user_upload_dump." + str(datetime.datetime.now()).replace(" ", "").replace(":","_") + ".csv"
     f = open(csv_filename, 'w')
-    csv_header = "user_id,file_name,timestamp"
+    csv_header = "user_id,file_name,times"
     f.write(csv_header + "\n")
     for i in range(0, NUM_OF_UPLOADS_IN_CSV):
         user_id = users[random.randint(0, user_count - 1)].id
         file_name = generate_random_string(10) + "." + generate_random_string(3)
-        timestamp = get_timestamp()
-        row = str(user_id) + "," + str(file_name) + "," + str(timestamp.strftime('%s'))
+        times = get_timestamp()
+        row = str(user_id) + "," + str(file_name) + "," + str(times.strftime('%s'))
         f.write(row + "\n")
     f.close()
 
@@ -156,7 +156,7 @@ def load_data():
         new_activity_log_entry = ActivityLog.create(
             user=user,
             type=ActivityLog.types[random.randint(0, len(ActivityLog.types) - 1)],
-            timestamp=get_timestamp()
+            times=get_timestamp()
         )
         new_activity_log_entry.save()
         print "Created activity_log with ID: " + str(new_activity_log_entry.id) + ", for User with ID: " + str(user.id)

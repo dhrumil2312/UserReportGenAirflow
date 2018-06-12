@@ -1,17 +1,60 @@
 #!/usr/bin/bash
 
-hive -e "drop table if exists  latest_activity_user;" 
+impala-shell -q "drop table if exists  latest_activity_user;" 
 
-hive -e "drop table if exists  total_activity_user;"  
+if [ $? -eq 0 ]
+then
+        echo "Drop table successful"
+else
+        echo "Error in dropping table.  Please check $LOG_HOME/users_report.log for error. Exiting.........." >&2
+        exit 1
+fi
 
-hive -e "drop table if exists  pre_final;"  
+impala-shell -q "drop table if exists  total_activity_user;"  
 
-hive -e "drop table if exists  user_files;"   
+if [ $? -eq 0 ]
+then
+        echo "Drop table successful"
+else
+        echo "Error in dropping table.  Please check $LOG_HOME/users_report.log for error. Exiting.........." >&2
+        exit 1
+fi
 
-hive -e "drop table if exists  user_report;"
+
+impala-shell -q "drop table if exists  pre_final;"  
+
+if [ $? -eq 0 ]
+then
+        echo "Drop table successful"
+else
+        echo "Error in dropping table.  Please check $LOG_HOME/users_report.log for error. Exiting.........." >&2
+        exit 1
+fi
 
 
-hive -e "create table latest_activity_user as select user_id , type , if(unix_timestamp() - timestamp < 172800,1,0) is_active from (select * from (select * , row_number() over (partition by user_id order by timestamp desc) as rn from activitylog )a  where rn = 1) b;"
+impala-shell -q "drop table if exists  user_files;"   
+
+if [ $? -eq 0 ]
+then
+        echo "Drop table successful"
+else
+        echo "Error in dropping table.  Please check $LOG_HOME/users_report.log for error. Exiting.........." >&2
+        exit 1
+fi
+
+
+impala-shell -q "drop table if exists  user_report;"
+
+if [ $? -eq 0 ]
+then
+        echo "Drop table successful"
+else
+        echo "Error in dropping table.  Please check $LOG_HOME/users_report.log for error. Exiting.........." >&2
+        exit 1
+fi
+
+
+impala-shell -q "create table latest_activity_user as select user_id , type , if(unix_timestamp() - times < 172800,1,0) is_active from (select * from (select * , row_number() over (partition by user_id order by times desc) as rn from activitylog )a  where rn = 1) b;"
 
 if [ $? -eq 0 ]
 then
@@ -21,7 +64,7 @@ else
         exit 1
 fi
 
-hive -e "create table total_activity_user as select user_id , sum(total_insert) , sum(total_update) , sum(total_delete) from (select user_id , if(type ='INSERT' , cnt, 0) total_insert, if(type ='UPDATE' , cnt, 0) total_update, if(type ='DELETE' , cnt, 0) total_delete from (select user_id , type , count(1) cnt from activitylog group by user_id , type ) a)b group by user_id ;" 
+impala-shell -q "create table total_activity_user as select user_id , sum(total_insert) , sum(total_update) , sum(total_delete) from (select user_id , if(type ='INSERT' , cnt, 0) total_insert, if(type ='UPDATE' , cnt, 0) total_update, if(type ='DELETE' , cnt, 0) total_delete from (select user_id , type , count(1) cnt from activitylog group by user_id , type ) a)b group by user_id ;" 
 
 if [ $? -eq 0 ]
 then
@@ -32,7 +75,7 @@ else
 fi
 
 
-hive -e "create table pre_final as select a.* ,b.type , b.is_active from total_activity_user a , latest_activity_user b where a.user_id = b.user_id; " 
+impala-shell -q "create table pre_final as select a.* ,b.type , b.is_active from total_activity_user a , latest_activity_user b where a.user_id = b.user_id; " 
 
 if [ $? -eq 0 ]
 then
@@ -43,7 +86,7 @@ else
 fi
 
 
-hive -e "create table user_files as select user_id , count(1) cnt from user_upload_dump group by user_id ;"
+impala-shell -q "create table user_files as select user_id , count(1) cnt from user_upload_dump group by user_id ;"
 
 if [ $? -eq 0 ]
 then
@@ -54,7 +97,7 @@ else
 fi
 
 
-hive -e "create table user_report as select a.* , if(b.cnt = NULL, 0 ,b.cnt) upload_count from pre_final a left outer join user_files b on (a.user_id = b.user_id) ;"
+impala-shell -q "create table user_report as select a.* , if(b.cnt = NULL, 0 ,b.cnt) upload_count from pre_final a left outer join user_files b on (a.user_id = b.user_id) ;"
 
 if [ $? -eq 0 ]
 then
